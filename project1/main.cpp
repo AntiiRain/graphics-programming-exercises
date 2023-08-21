@@ -44,7 +44,7 @@ Eigen::Matrix4f get_model_matrix(float rotation_angle)
 
 {
 
-    Eigen::Matrix4f model = Eigen::Matrix4f::Identity();
+    Eigen::Matrix4f model = Eigen::Matrix4f::Identity(); 
 
 
 
@@ -69,6 +69,14 @@ Eigen::Matrix4f get_model_matrix(float rotation_angle)
     model(1,0) = sina;
 
     model(1,1) = cosa;
+
+        //     cosa, -sina, 0, 0,
+
+        // sina, cosa,  0, 0,
+
+        // 0,    0,     1, 0,
+
+        // 0,    0,     0, 1;
 
     return model;
 
@@ -128,13 +136,35 @@ Eigen::Matrix4f get_projection_matrix(float eye_fov, float aspect_ratio,
 
     Matrix4f Mo_translate;
 
-    Mo_translate(2,3) = -(n+f)/2;
+  //becaus l=-r so we don't need to compute r+l/2  t+b/2
+
+    // Mo_translate(2,3) = -(n+f)/2;  //this way need to use Matrix4f::Identity() before
+
+    Mo_translate<<
+
+    1, 0, 0, 0,
+
+    0, 1, 0, 0,  //b=-t;
+
+    0, 0, 1, -(n+f)/2 ,
+
+    0, 0, 0, 1;
 
     Matrix4f Mo_scale;
 
+    Mo_scale<<
+
+    1/r, 0, 0, 0,
+
+    0, 1/t, 0, 0,
+
+    0, 0, 2/(n-f), 0,
+
+    0, 0, 0, 1;
 
 
 
+    projection = (Mo_scale*Mo_translate)*Mp;
 
     return projection;
 
