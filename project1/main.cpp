@@ -8,7 +8,7 @@
 
 #include <opencv2/opencv.hpp>
 
-
+using namespace std;
 
 constexpr double MY_PI = 3.1415926;
 
@@ -90,10 +90,6 @@ Eigen::Matrix4f get_projection_matrix(float eye_fov, float aspect_ratio,
 
 {
 
-    // Students will implement this function
-
-
-
     Eigen::Matrix4f projection = Eigen::Matrix4f::Identity();
 
 
@@ -104,31 +100,35 @@ Eigen::Matrix4f get_projection_matrix(float eye_fov, float aspect_ratio,
 
     // Then return it.
 
+    
+
     //squeeze fist and than projection
 
     //compute l r b t
+
+    // cout<<"zfar"<<zFar;    //z all ways positive  and bigger means father
+
+    // cout<<"zNear"<<zNear;
 
     float t = tan(eye_fov*MY_PI/2/180)*fabs(zNear);  //better use fabs for zNear
 
     float r = aspect_ratio*t;
 
-    float l = -r;
+    float n = zNear;
 
-    float b = -t;
+    float f = zFar;
 
-    float n = -abs(zNear);
-
-    float f = -abs(zFar);
+    // cout<<"t"<<t;
 
     Matrix4f Mp;
 
     Mp<<
 
-    n, 0, 0, 0,
+    -n, 0, 0, 0,
 
-    0, n, 0, 0,
+    0, -n, 0, 0,
 
-    0, 0, n+f, -n*f,
+    0, 0, -n-f, n*f,
 
     0, 0, 1, 0;
 
@@ -146,7 +146,7 @@ Eigen::Matrix4f get_projection_matrix(float eye_fov, float aspect_ratio,
 
     0, 1, 0, 0,  //b=-t;
 
-    0, 0, 1, -(n+f)/2 ,
+    0, 0, 1, (n+f)/2 ,
 
     0, 0, 0, 1;
 
@@ -158,7 +158,7 @@ Eigen::Matrix4f get_projection_matrix(float eye_fov, float aspect_ratio,
 
     0, 1/t, 0, 0,
 
-    0, 0, 2/(n-f), 0,
+    0, 0, -2/(n-f), 0,
 
     0, 0, 0, 1;
 
