@@ -1,0 +1,3 @@
+/home/cs18/Documents/SoftwareRasterizer/build/CMakeFiles/rebuild_cache.dir
+/home/cs18/Documents/SoftwareRasterizer/build/CMakeFiles/Rasterizer.dir
+/home/cs18/Documents/SoftwareRasterizer/build/CMakeFiles/edit_cache.dir
